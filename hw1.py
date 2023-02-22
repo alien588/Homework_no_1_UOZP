@@ -68,11 +68,63 @@ def single_linkage(c1, c2, distance_fn):
     (lists of input vectors or rows).
     Argument distance_fn is a function that can compute
     a distance between two vectors (like manhattan_dist)."""
+    d,c = c2,c1
+    c = 0
+    running_min = float('inf')
+    # Sprehod po listu
+    if len(d) == len(c):
+        v = len(d)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+        if (c == c) and (c < running_min):
+                running_min = c
+    elif len(d) > len(c):
+        v = len(c)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+        if (c == c) and (c < running_min):
+                running_min = c
+    else: 
+        v = len(d)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+            if (c == c) and (c < running_min):
+                running_min = c
+    if running_min == float('inf'):
+        return float('NaN')
+    
+    return running_min
     
     raise NotImplementedError()
 
 
 def complete_linkage(c1, c2, distance_fn):
+     d,c = c2,c1
+     c = 0
+     running_max = float('-inf')
+     if len(d) == len(c):
+        v = len(d)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+        if (c == c) and (c > running_max):
+                running_min = c
+    elif len(d) > len(c):
+        v = len(c)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+        if (c == c) and (c > running_min):
+                running_min = c
+    else: 
+        v = len(d)
+        for i in range(v):
+            c = distance_fn(d[i],c[i])
+            if (c == c) and (c > running_min):
+                running_min = c
+    if running_min == float('-inf'):
+        return float('NaN')
+    
+    return running_min
+
     raise NotImplementedError()
 
 
