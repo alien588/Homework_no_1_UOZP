@@ -17,9 +17,8 @@ def manhattan_dist(r1, r2):
             r = cum_sum / cnt
             for i in range(corrupt_cnt):
                 cum_sum += r
-        #cum_sum = cum_sum ** (1 / 2)
+        # cum_sum = cum_sum ** (1 / 2)
         return cum_sum
-    raise NotImplementedError()
 
 
 def euclidean_dist(r1, r2):
@@ -60,7 +59,6 @@ def euclidean_dist(r1, r2):
                 cnt += 1
         cum_sum = cum_sum ** (1/2)
         return cum_sum
-    raise NotImplementedError()
 
 
 def single_linkage(c1, c2, distance_fn):
@@ -68,69 +66,112 @@ def single_linkage(c1, c2, distance_fn):
     (lists of input vectors or rows).
     Argument distance_fn is a function that can compute
     a distance between two vectors (like manhattan_dist)."""
-    d,c = c2,c1
+    d, b = c2, c1
     c = 0
     running_min = float('inf')
     # Sprehod po listu
-    if len(d) == len(c):
+    if len(d) == len(b):
         v = len(d)
+        w = len(b)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-        if (c == c) and (c < running_min):
-                running_min = c
-    elif len(d) > len(c):
-        v = len(c)
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if (c == c) and (c < running_min):
+                    running_min = c
+    elif len(d) > len(b):
+        v = len(b)
+        w = len(d)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-        if (c == c) and (c < running_min):
-                running_min = c
+            for j in range(w):
+                c = distance_fn(d[i], c[j])
+                if (c == c) and (c < running_min):
+                    running_min = c
     else: 
         v = len(d)
+        w = len(b)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-            if (c == c) and (c < running_min):
-                running_min = c
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if (c == c) and (c < running_min):
+                    running_min = c
     if running_min == float('inf'):
         return float('NaN')
     
     return running_min
-    
-    raise NotImplementedError()
+
 
 
 def complete_linkage(c1, c2, distance_fn):
-     d,c = c2,c1
-     c = 0
-     running_max = float('-inf')
-     if len(d) == len(c):
+    d, b = c2, c1
+    c = 0
+    running_max = float('-inf')
+    v = 0
+    if len(d) == len(b):
         v = len(d)
+        w = len(b)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-        if (c == c) and (c > running_max):
-                running_min = c
-    elif len(d) > len(c):
-        v = len(c)
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if (c == c) and (c > running_max):
+                    running_max = c
+    elif len(d) > len(b):
+        v = len(b)
+        w = len(d)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-        if (c == c) and (c > running_min):
-                running_min = c
-    else: 
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if (c == c) and (c > running_max):
+                    running_max = c
+    else:
         v = len(d)
+        w = len(b)
         for i in range(v):
-            c = distance_fn(d[i],c[i])
-            if (c == c) and (c > running_min):
-                running_min = c
-    if running_min == float('-inf'):
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if (c == c) and (c > running_max):
+                    running_max = c
+    if running_max == float('-inf'):
         return float('NaN')
     
-    return running_min
+    return running_max
 
-    raise NotImplementedError()
 
 
 def average_linkage(c1, c2, distance_fn):
-    raise NotImplementedError()
+    d, b = c2, c1
+    running_avg = 0
+    cnt = 0
+    if len(d) == len(b):
+        v = len(d)
+        w = len(b)
+        for i in range(v):
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if c == c:
+                    running_avg += c
+                    cnt += 1
+    elif len(d) > len(b):
+        v = len(b)
+        w = len(d)
+        for i in range(v):
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if c == c:
+                    running_avg += c
+                    cnt += 1
+    else:
+        v = len(d)
+        w = len(b)
+        for i in range(v):
+            for j in range(w):
+                c = distance_fn(d[i], b[j])
+                if c == c:
+                    running_avg += c
+                    cnt += 1
+    if cnt == 0:
+        return float('NaN')
 
+    return running_avg/cnt
 
 class HierarchicalClustering:
 
@@ -146,6 +187,9 @@ class HierarchicalClustering:
         """
         Return the closest pair of clusters and their distance.
         """
+        d = data
+        cl = clusters
+
         raise NotImplementedError()
 
     def run(self, data):
