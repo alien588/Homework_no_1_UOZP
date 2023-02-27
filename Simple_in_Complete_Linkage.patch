@@ -1,0 +1,74 @@
+Subject: [PATCH] Simple in Complete Linkage
+---
+Index: hw1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/hw1.py b/hw1.py
+--- a/hw1.py	(revision f5ecf03edd817b1e74ff51f53c3124bce96215e5)
++++ b/hw1.py	(revision 61c149ad36280625df047d484ad1e9f07cd1a9ee)
+@@ -68,11 +68,63 @@
+     (lists of input vectors or rows).
+     Argument distance_fn is a function that can compute
+     a distance between two vectors (like manhattan_dist)."""
++    d,c = c2,c1
++    c = 0
++    running_min = float('inf')
++    # Sprehod po listu
++    if len(d) == len(c):
++        v = len(d)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++        if (c == c) and (c < running_min):
++                running_min = c
++    elif len(d) > len(c):
++        v = len(c)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++        if (c == c) and (c < running_min):
++                running_min = c
++    else: 
++        v = len(d)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++            if (c == c) and (c < running_min):
++                running_min = c
++    if running_min == float('inf'):
++        return float('NaN')
++    
++    return running_min
+     
+     raise NotImplementedError()
+ 
+ 
+ def complete_linkage(c1, c2, distance_fn):
++     d,c = c2,c1
++     c = 0
++     running_max = float('-inf')
++     if len(d) == len(c):
++        v = len(d)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++        if (c == c) and (c > running_max):
++                running_min = c
++    elif len(d) > len(c):
++        v = len(c)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++        if (c == c) and (c > running_min):
++                running_min = c
++    else: 
++        v = len(d)
++        for i in range(v):
++            c = distance_fn(d[i],c[i])
++            if (c == c) and (c > running_min):
++                running_min = c
++    if running_min == float('-inf'):
++        return float('NaN')
++    
++    return running_min
++
+     raise NotImplementedError()
+ 
+ 
